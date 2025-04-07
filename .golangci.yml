@@ -1,0 +1,99 @@
+run:
+  go: "1.23"
+  timeout: 5m
+linters:
+  enable-all: true
+  disable:
+    - godot
+    - testpackage
+    - ireturn
+    - varnamelen
+    - depguard
+    - err113
+    # deprecated
+    - gomnd
+    - exportloopref
+    - execinquery
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/vasilesk/efmt)
+    skip-generated: true
+    custom-order: false
+  #    section-separators:
+  #      - newLine
+  godox:
+    keywords:
+      - BUG
+      - FIXME
+  gocyclo:
+    min-complexity: 15
+  cyclop:
+    max-complexity: 15
+  nestif:
+    min-complexity: 10
+  dupl:
+    threshold: 160
+  funlen:
+    lines: 60
+    statements: 40
+  gosec:
+    excludes:
+      - G402
+  tagliatelle:
+    case:
+      use-field-name: false
+      rules:
+        json: snake
+        yaml: camel
+        xml: camel
+        bson: camel
+        avro: snake
+        mapstructure: kebab
+  wrapcheck:
+    ignoreSigs:
+      - .Errorf(
+      - errors.New(
+      - errors.Unwrap(
+      - .Wrap(
+      - .Wrapf(
+      - .WithMessage(
+      - .WithMessagef(
+      - .WithStack(
+  interfacebloat:
+    max: 15
+  errorlint:
+    asserts: false
+issues:
+  exclude-dirs:
+    - (\/|^)gen(\/|$)
+  max-same-issues: 0
+  max-issues-per-linter: 0
+  exclude-rules:
+    - linters:
+        - revive
+      text: "exported: comment on exported"
+    - linters:
+        - revive
+      text: "package-comments: package comment should be of the form"
+    - linters:
+        - stylecheck
+      text: "ST1021: comment on exported type"
+    - linters:
+        - stylecheck
+        - revive
+      text: "should have a package comment"
+    - linters:
+        - stylecheck
+        - revive
+      text: "should have comment or be unexported"
+    - linters:
+        - stylecheck
+        - revive
+      text: "or a comment on this block"
+    - linters:
+        - gosec
+      path: postgres/repo.go
+  exclude-use-default: false
