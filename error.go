@@ -7,35 +7,40 @@ import (
 	"github.com/samber/lo"
 )
 
+// New creates a new formatted error with the given text and optional key-value pairs.
 func New(text string, kv ...KeyValue) error {
 	return &e{
-		err:    errors.New(text),
-		values: kv,
+		err:     errors.New(text),
+		wrapped: nil,
+		values:  kv,
 	}
 }
 
+// Wrap wraps an existing error with additional text and optional key-value pairs.
+// It preserves the original error's context while adding new information.
+// Returns nil if the provided error is nil.
 func Wrap(err error, text string, kv ...KeyValue) error {
 	if err == nil {
 		return nil
 	}
 
-	return errorf("%s: %w", text, err).Add(kv)
+	return lo.ToPtr(e{
+		wrapped: err,
+		err:     fmt.Errorf("%s: %w", text, err),
+		values:  make([]KeyValue, 0, 1),
+	}).Add(kv)
 }
 
+// KV creates a key-value pair for attaching to errors.
+// This is a convenience function to create structured data entries.
 func KV(key string, value any) KeyValue {
 	return KeyValue{Key: key, Value: value}
 }
 
-func errorf(format string, a ...any) *e {
-	return &e{
-		err:    fmt.Errorf(format, a...),
-		values: make([]KeyValue, 0, 1),
-	}
-}
-
 type e struct {
-	err    error
-	values []KeyValue
+	wrapped error
+	err     error
+	values  []KeyValue
 }
 
 func (e *e) Error() string {
@@ -43,7 +48,7 @@ func (e *e) Error() string {
 }
 
 func (e *e) Unwrap() error {
-	return e.err
+	return e.wrapped
 }
 
 func (e *e) Values() []KeyValue {
