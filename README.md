@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-go get github.com/vasilesk/efmt
+go get github.com/vasilesk/efmt@latest
 ```
 
 ## Features
@@ -24,7 +24,7 @@ import "github.com/vasilesk/efmt"
 
 func validateUser(user User) error {
     if user.Age < 18 {
-        return efmt.New("user is underage", 
+        return efmt.New("user is underage",
             efmt.KV("user_id", user.ID),
             efmt.KV("age", user.Age),
             efmt.KV("required_age", 18),
@@ -42,7 +42,7 @@ import "github.com/vasilesk/efmt"
 func processRequest(req Request) error {
     user, err := fetchUser(req.UserID)
     if err != nil {
-        return efmt.Wrap(err, "failed to fetch user", 
+        return efmt.Wrap(err, "failed to fetch user",
             efmt.KV("request_id", req.ID),
             efmt.KV("user_id", req.UserID),
         )
@@ -64,12 +64,12 @@ func handleError(err error) {
     // Get all key-value pairs
     allValues := efmt.Values(err)
     fmt.Printf("Error context: %+v\n", allValues)
-    
+
     // Get a specific value
     if requestID, ok := efmt.Value[string](err, "request_id"); ok {
         fmt.Printf("Request ID: %s\n", requestID)
     }
-    
+
     // Get all key-value pairs as a slice
     pairs := efmt.ValuePairs(err)
     for _, kv := range pairs {
@@ -86,18 +86,18 @@ import "github.com/vasilesk/efmt"
 func processData() error {
     data, err := fetchData()
     if err != nil {
-        return efmt.Wrap(err, "data fetch failed", 
+        return efmt.Wrap(err, "data fetch failed",
             efmt.KV("timestamp", time.Now()),
         )
     }
-    
+
     err = validateData(data)
     if err != nil {
-        return efmt.Wrap(err, "data validation failed", 
+        return efmt.Wrap(err, "data validation failed",
             efmt.KV("data_size", len(data)),
         )
     }
-    
+
     return nil
 }
 
@@ -116,7 +116,7 @@ You can combine `efmt` with other error handling packages as it maintains compat
 ```go
 import (
     "errors"
-    
+
     "github.com/vasilesk/efmt"
 )
 
