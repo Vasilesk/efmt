@@ -1,5 +1,15 @@
 # efmt
 
+[![tag](https://img.shields.io/github/tag/vasilesk/efmt.svg)](https://github.com/vasilesk/efmt/releases)
+![Go Version](https://img.shields.io/badge/Go-%3E%3D%201.23-%23007d9c)
+<!-- [![GoDoc](https://godoc.org/github.com/samber/lo?status.svg)](https://pkg.go.dev/github.com/samber/lo) -->
+![Build Status](https://github.com/vasilesk/efmt/actions/workflows/test.yml/badge.svg)
+[![Go report](https://goreportcard.com/badge/github.com/vasilesk/efmt)](https://goreportcard.com/report/github.com/vasilesk/efmt)
+[![Coverage](https://img.shields.io/codecov/c/github/vasilesk/efmt)](https://codecov.io/gh/vasilesk/efmt)
+<!-- [![Contributors](https://img.shields.io/github/contributors/samber/lo)](https://github.com/samber/lo/graphs/contributors) -->
+<!-- [![License](https://img.shields.io/github/license/samber/lo)](./LICENSE) -->
+
+
 `efmt` is a Go library for enhanced error handling that allows you to attach structured metadata (key-value pairs) to errors. This helps to enrich error context while maintaining compatibility with Go's standard error interface.
 
 ## Installation
