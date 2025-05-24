@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - "*" # все теги
+      - "*"
   pull_request:
     branches:
       - main
@@ -26,7 +26,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
-          stable: false
 
       - name: Build
         run: make build
@@ -42,6 +41,6 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./cover.out
+          files: ./cover.out
           flags: unittests
           verbose: true
